@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Simulating build step...'
-                sh 'python3 hello.py'   // run the python script
+                // sh 'python3 hello.py'   // run the python script
             }
         }
 

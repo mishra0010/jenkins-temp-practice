@@ -47,11 +47,6 @@ pipeline {
             steps {
                 sh 'bash build.sh'
             }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'build.zip', fingerprint: true
-                }
-            }
         }
 
         stage('Test') {
@@ -61,35 +56,18 @@ pipeline {
         }
 
         stage('Package') {
-            when {
-                expression { currentBuild.currentResult == 'SUCCESS' }
-            }
             steps {
                 sh 'bash package.sh'
             }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'package.tar.gz', fingerprint: true
-                }
             }
-        }
-
         stage('Deploy') {
-            when {
-                branch 'main'
-            }
             steps {
-                sh 'bash deploy.sh main'
+                sh 'bash deploy.sh'
             }
-        }
-    }
-
-    post {
-        always {
-            echo "Pipeline finished with status: ${currentBuild.currentResult}"
         }
     }
 }
+
 
 
 
